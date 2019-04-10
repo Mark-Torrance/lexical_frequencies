@@ -92,7 +92,7 @@ freqs_byword <- Df %>%
   group_by(fword) %>% 
   summarise(word_len = max(nchar(fword))
             ,freq = max(freq)
-            ,has_double = ifelse(sum(is_double > 0, 1, 0))
+            ,has_double = ifelse(sum(is_double) > 0, 1, 0)
             ,M_letter_freq = mean(letter_freq)
             ,init_letter_freq = letter_freq[Letter_N == 'L1']
             ,M_dig_freq = mean(dig_freq, na.rm = T)
@@ -101,4 +101,5 @@ freqs_byword <- Df %>%
             ,init_dig_condprob = dig_condprob[Letter_N == 'L1']) %>%
   arrange(word_len, desc(freq))
   
-
+library(openxlsx)
+write.xlsx(freqs_byword, 'tmp.xlsx')
